@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nav</title>
+  <link rel="stylesheet" href="vendor/pico.min.css" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <main class="popup container">
+
+    <!-- ===== 顶部品牌栏 ===== -->
+    <header class="app-header">
+      <img class="app-logo" src="images/logo.png" alt="Nav Logo" />
+      <span class="app-name">Nav</span>
+      <div class="app-actions">
+        <button id="refreshCatalog" class="icon-btn" type="button" title="刷新分类" aria-label="刷新分类">
+          <svg viewBox="0 0 24 24">
+            <path d="M17.65 6.35A7.96 7.96 0 0 0 12 4c-4.42 0-8 3.58-8 8s3.58 8 8 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0 1 12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z" />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- ===== 主页 ===== -->
+    <section id="mainPage" class="page active" aria-label="主菜单">
+      <div id="currentTabInfo" class="tab-info hidden"></div>
+
+      <button id="addTool" class="menu-btn primary" type="button">
+        <svg viewBox="0 0 24 24">
+          <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+        </svg>
+        <span>添加当前页面</span>
+      </button>
+      <button id="openSetting" class="menu-btn" type="button">
+        <svg viewBox="0 0 24 24">
+          <path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.37-.31-.6-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.37.31.6.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z" />
+        </svg>
+        <span>扩展设置</span>
+      </button>
+      <button id="openBrowserSettings" class="menu-btn" type="button">
+        <svg viewBox="0 0 24 24">
+          <path d="M19 4H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 14H5V8h14v10z" />
+        </svg>
+        <span>浏览器设置</span>
+      </button>
+      <button id="openWindow" class="menu-btn small" type="button">
+        <svg viewBox="0 0 24 24">
+          <path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2v7z" />
+        </svg>
+        <span>在独立窗口打开</span>
+      </button>
+
+      <footer class="app-footer">
+        <span>Nav 扩展 v1.0.0</span>
+      </footer>
+    </section>
+    <!-- ===== 添加工具 ===== -->
+    <section id="confirmPage" class="page" aria-label="添加工具">
+      <h2 class="page-title">添加工具</h2>
+      <p class="hint">表单已根据当前页面自动填充，可修改后提交。</p>
+      <form id="addForm" novalidate>
+        <label for="catelog">分类<span class="required">*</span>
+          <select id="catelog" name="catelog" required>
+            <option value="">暂无分类，请先获取</option>
+          </select>
+        </label>
+        <label for="name">名称<span class="required">*</span>
+          <input id="name" name="name" type="text" placeholder="请输入名称" autocomplete="off" required />
+        </label>
+        <label for="url">网址<span class="required">*</span>
+          <input id="url" name="url" type="text" placeholder="https://example.com" autocomplete="off" inputmode="url" required />
+        </label>
+        <label for="internalUrl">内网网址<span class="optional">（可选）</span>
+          <input id="internalUrl" name="internalUrl" type="text" placeholder="http://192.168.1.10:8080，留空表示没有" autocomplete="off" inputmode="url" />
+        </label>
+        <p class="hint">选填：首页点击卡片时优先访问内网网址，检测不通时自动回退到上面的网址。</p>
+        <label for="logo">图标<span class="optional">（可选）</span>
+          <input id="logo" name="logo" type="text" placeholder="图标地址" autocomplete="off" />
+        </label>
+        <label for="desc">描述<span class="required">*</span>
+          <input id="desc" name="desc" type="text" placeholder="请输入描述" autocomplete="off" required />
+        </label>
+
+        <label for="sort">排序<span class="optional">（-1 添加到最后，0 或留空添加到最前）</span>
+          <input id="sort" name="sort" type="number" step="1" value="-1" placeholder="-1" inputmode="numeric" autocomplete="off" />
+        </label>
+
+        <label class="switch-row" for="hide1">
+          <input id="hide1" name="hide" type="checkbox" role="switch" />
+          设为隐藏
+        </label>
+
+        <div class="page-actions">
+          <button id="confirmAdd" type="submit">确定添加</button>
+          <button id="cancelAdd" class="secondary outline" type="button">返回</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- ===== 设置 ===== -->
+    <section id="settingPage" class="page" aria-label="扩展设置">
+      <h2 class="page-title">扩展设置</h2>
+      <form id="settingForm" novalidate>
+        <label for="baseUrl">站点地址<span class="required">*</span>
+          <input id="baseUrl" name="baseUrl" type="url" placeholder="https://nav.your-site.com" autocomplete="off" required />
+        </label>
+
+        <label for="intranetUrl">站点内网地址<span class="optional">（可选）</span>
+          <input id="intranetUrl" name="intranetUrl" type="text" placeholder="http://192.168.1.10:8080" autocomplete="off" inputmode="url" />
+        </label>
+
+        <p class="hint network-status">
+          <span>当前网络：<strong id="networkStateText">外网</strong></span>
+          <button id="refreshNetwork" class="link-btn" type="button">重新检测</button>
+        </p>
+
+        <label for="token">API Token<span class="required">*</span>
+          <div class="token-input">
+            <input id="token" name="token" type="password" placeholder="请输入 Token" autocomplete="off" required />
+            <button id="toggleToken" class="icon-btn" type="button" title="显示/隐藏 Token">显示</button>
+          </div>
+        </label>
+
+        <div class="page-actions">
+          <button id="confirmSetting" type="submit">保存设置</button>
+          <button id="cancelSetting" class="secondary outline" type="button">返回</button>
+        </div>
+
+        <div class="page-actions split">
+          <button id="testConn" class="secondary outline" type="button">测试连接</button>
+          <button id="fetchCatelog" class="secondary outline" type="button">获取分类</button>
+        </div>
+
+        <p class="hint">提示：在 Nav 后台「设置」页面可获取站点地址与 API Token。站点地址填到域名部分即可，无需包含 /admin。配置内网地址后，浏览器启动时会自动检测内网是否可用，并优先使用内网访问。</p>
+      </form>
+    </section>
+
+    <!-- ===== 浏览器设置 ===== -->
+    <section id="browserSettingPage" class="page browser-setting-page" aria-label="浏览器设置">
+      <h2 class="page-title">浏览器设置</h2>
+      <p class="hint">选择浏览器启动页与新标签页的打开方式。</p>
+
+      <div class="site-row">
+        <span class="site-label">访问站点</span>
+        <a id="browserSiteUrl" class="site-url">未配置站点地址</a>
+      </div>
+      <p id="browserSiteWarning" class="site-warning hidden">尚未配置站点地址，请先在「扩展设置」中填写站点地址与 Token。</p>
+
+      <form id="browserSettingForm" novalidate>
+        <fieldset class="mode-list">
+          <legend>打开方式</legend>
+
+          <label class="mode-card" for="modeHome">
+            <input type="radio" id="modeHome" name="browserMode" value="home" />
+            <span class="mode-text">
+              <strong>主页模式</strong>
+              <small>浏览器启动时打开站点网址。每次打开新标签页时，自动切回已打开的站点标签页，不会保留空白新标签页。</small>
+            </span>
+          </label>
+
+          <label class="mode-card" for="modeNewtab">
+            <input type="radio" id="modeNewtab" name="browserMode" value="newtab" />
+            <span class="mode-text">
+              <strong>新建标签页模式</strong>
+              <small>浏览器启动页与新建标签页均为站点网址，每次打开新标签页都会直接加载站点。</small>
+            </span>
+          </label>
+
+          <label class="mode-card" for="modeOff">
+            <input type="radio" id="modeOff" name="browserMode" value="off" checked />
+            <span class="mode-text">
+              <strong>关闭</strong>
+              <small>不接管浏览器启动页和新标签页，保持浏览器原有行为。</small>
+            </span>
+          </label>
+        </fieldset>
+
+        <p class="hint">受浏览器安全限制，扩展无法直接修改浏览器自带的「启动时」与「主页」设置，因此通过监听启动和新标签页事件实现相同效果。</p>
+
+        <div class="page-actions">
+          <button id="saveBrowserSetting" type="submit">保存设置</button>
+          <button id="cancelBrowserSetting" class="secondary outline" type="button">返回</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- ===== 加载遮罩 ===== -->
+    <div class="page-loader" aria-hidden="true">
+      <div class="spinner"></div>
+      <p>加载中…</p>
+    </div>
+
+    <!-- ===== Toast ===== -->
+    <div id="toast" class="toast" role="status" aria-live="polite">
+      <div id="toastContent" class="toast__content"></div>
+    </div>
+  </main>
+
+  <script src="action.js"></script>
+</body>
+
+</html>

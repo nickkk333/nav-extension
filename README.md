@@ -1,0 +1,72 @@
+# nav-extension
+
+[Nav](https://github.com/nickkk333/nav) 导航站的浏览器管理扩展：一键收录当前页面、内外网地址自动切换，并可设置浏览器启动页与新标签页。支持 Chrome / Edge 等 Chromium 浏览器及 Firefox（Manifest V3）。
+
+仓库地址：https://github.com/nickkk333/nav-extension
+
+本项目 fork 自 [Mereithhh/van-nav-extension](https://github.com/Mereithhh/van-nav-extension)，并在此基础上进行了独立修改。
+
+## 功能特性
+
+- 🚀 一键添加：自动读取当前标签页的标题、URL、图标与网页描述（`meta description`），预填添加表单
+- 🔢 排序可控：添加时可指定排序值 `sort`，默认 `-1` 添加到分类最后，`0` 或留空添加到最前
+- ⚙️ 分类同步：从后台拉取分类列表并缓存，可一键刷新
+- 🌐 内外网切换：可配置站点内网地址，浏览器启动时自动检测内网是否可用，优先使用内网访问，不可用时自动回退到外网地址；网络环境变化（重连 Wi‑Fi / VPN、打开新标签页）时会自动重新检测，避免误用外网地址
+- 🖥️ 浏览器设置：支持「主页模式」与「新建标签页模式」，让启动页和新标签页自动打开站点
+- 🔐 安全设置：Token 密码输入 + 显示切换，支持“测试连接”
+- 💬 友好反馈：Toast 通知代替系统弹窗，加载态防重复提交
+- 📦 离线可用：样式库本地化（vendor/pico.min.css），不依赖外部 CDN
+- ⌨️ 键盘支持：Esc 快速返回主页面
+
+## 安装
+
+1. 从本仓库下载并解压源码（Git Clone 或下载 ZIP）
+2. 打开 Chrome `chrome://extensions/`
+3. 开启右上角“开发者模式”
+4. 点击“加载已解压的扩展程序”，选择本目录
+
+## 使用
+
+1. 点击工具栏的扩展图标
+2. 首次使用会引导进入“扩展设置”，填写站点地址与 Token（在 Nav 后台可获取）；如有内网访问地址，可同时填写「站点内网地址」，保存后会立即检测内网是否可用，也可点击「重新检测」手动刷新状态
+3. 点击右上角刷新按钮同步分类
+4. 在任意网页点击“添加当前页面”即可快速收录
+5. 在扩展主菜单点击「浏览器设置」（位于「扩展设置」和「在独立窗口打开」之间），选择浏览器启动页与新标签页的打开方式：
+   - **主页模式**：浏览器启动时打开站点网址；每次打开新标签页时自动切回「当前网络（内网 / 外网）对应」的站点标签页，没有则打开当前网络对应的站点
+   - **新建标签页模式**：浏览器启动页与新建标签页均为站点网址
+   - **关闭**：恢复浏览器原有行为
+
+> 受浏览器安全限制，扩展无法直接修改浏览器自带的「启动时」与「主页」设置，以上效果通过监听启动和新标签页事件实现。
+
+## 截图
+
+<div align=center>
+  <img src="assets/main.png" alt="主页面" width="400" />
+  <img src="assets/setting.png" alt="扩展设置" width="380" />
+</div>
+
+<div align=center>
+  <img src="assets/browser.png" alt="浏览器设置" width="380" />
+</div>
+
+## 目录结构
+
+| 文件 | 说明 |
+| --- | --- |
+| manifest.json | 扩展清单（MV3） |
+| popup.html | 弹窗界面 |
+| action.js | 弹窗逻辑 |
+| background.js | 后台脚本（启动页 / 新标签页接管） |
+| styles.css | 自定义样式 |
+| vendor/pico.min.css | 本地化的 Pico CSS |
+| images/logo.png | 扩展图标 |
+| assets/ | README 截图（主页面 / 扩展设置 / 浏览器设置） |
+| LICENSE | 开源许可证 |
+
+## 许可证
+
+本项目采用 [MIT License](LICENSE) 发布，Copyright (c) 2026 nick。
+
+本项目 fork 自 [Mereithhh/van-nav-extension](https://github.com/Mereithhh/van-nav-extension)。上游仓库未提供许可证声明，原始代码权利归上游作者所有；请以原仓库说明为准。
+
+第三方组件：`vendor/pico.min.css` 来自 [Pico CSS](https://picocss.com) v1.5.13，采用 MIT 许可证，版权归其作者所有。
